@@ -2,6 +2,7 @@ import os
 import sys
 import pygame as pg
 import random
+import time
 
 
 WIDTH, HEIGHT = 1100, 650
@@ -23,6 +24,32 @@ def check_bound(rct:pg.Rect) -> tuple[bool, bool]:
     if rct.top < 0 or HEIGHT < rct.bottom:
         tate = False
     return yoko,tate
+
+def gameover(screen: pg.Surface) -> None:
+    """
+    画面をブラックアウトし，
+    泣いているこうかとん画像と
+   「Game Over」の文字列を
+    5秒間表示させる関数
+    """
+    #画面をブラックアウト
+    kuro_img=pg.Surface((1100, 650)) 
+    pg.draw.rect(kuro_img,(0,0,0),(0,0,1100,650)) 
+    kuro_img.set_alpha(128)
+    screen.blit(kuro_img,[0,0])
+    #「Game Over」の文字列
+    fonto=pg.font.Font(None,80)
+    txt=fonto.render("Game Over",True,(255,255,255))
+    screen.blit(txt,[400,300])
+    #泣いているこうかとん
+    kouka_img1=pg.image.load("fig/8.png")
+    screen.blit(kouka_img1,(350,300))
+    kouka_img2=pg.image.load("fig/8.png")
+    screen.blit(kouka_img2,(720,300))
+    #画面を更新
+    pg.display.update()
+    time.sleep(5)
+
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -49,6 +76,7 @@ def main():
                 return
             
         if kk_rct.colliderect(bb_rct):
+            gameover(screen)
             return
         screen.blit(bg_img, [0, 0]) 
 
