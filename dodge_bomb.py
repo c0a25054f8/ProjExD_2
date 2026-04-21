@@ -32,11 +32,12 @@ def main():
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
 
+    #ばくだん
     bb_img = pg.Surface((20,20))
     pg.draw.circle(bb_img,(255,0,0),(10,10),10)
     bb_img.set_colorkey((0,0,0))
     bb_rct = bb_img.get_rect()
-    bb_rct.center = random.randint(0,WIDTH),random.randint(0,HEIGHT)
+    bb_rct.center = random.randint(0,WIDTH),random.randint(0,HEIGHT) #縦方向、横方向
     vx = +5
     vy = +5
 
@@ -46,6 +47,9 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+            
+        if kk_rct.colliderect(bb_rct):
+            return
         screen.blit(bg_img, [0, 0]) 
 
         key_lst = pg.key.get_pressed()
